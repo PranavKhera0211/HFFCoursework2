@@ -48,7 +48,7 @@ class directional_change:
     def __init__(self, theta):
         self.theta = theta
         self.P_EXT = None  # Extreme point
-        self.mode = None  # Up or down trend
+        self.mode = "up"  # Up or down trend
 
     def detect_dc(self, P_c):  # P_c is the current price
         if self.P_EXT is None:
@@ -78,22 +78,37 @@ df = pd.read_csv(file_path, sep=',', header=None, names=["datetime", "bid", "ask
 
 
 intrinsic_detector = intrinsic_time(delta_up = 0.00005, delta_down = 0.00005)
-df["event"] = [intrinsic_detector.detect_event(mid) for mid in df["mid"]]
+dc_detector = directional_change(theta = 0.001)
 
-event_df = df[df["event"] != 0]
+df["event"] = [intrinsic_detector.detect_event(mid) for mid in df["mid"]]
+df["directional_change"] = [dc_detector.detect_dc(mid) for mid in df["mid"]]
+
+
+event_df = df[(df["event"] != 0) | (df["directional_change"].notnull())]
+intrinsic_events = df[df["event"] != 0]
 
 # regular plot
 
 plt.figure(figsize=(12, 6))
-plt.plot(event_df["datetime"], event_df["mid"], linestyle='-', linewidth = 1, color='blue', label="Intrinsic Events")
+
+# midprice plot
+plt.plot(df["datetime"], df["mid"], linestyle='-', linewidth=0.5, color='gray', label="Mid-Price")
+#intrinsic_event
+plt.plot(intrinsic_events["datetime"], intrinsic_events["mid"], linestyle='-', linewidth = 0.5, color='blue', label="Intrinsic Events")
+
+# plot dc events
+dc_up = df[df["directional_change"] == "DC↑"]
+dc_down = df[df["directional_change"] == "DC↓"]
+plt.scatter(dc_up["datetime"], dc_up["mid"], color='red', label="DC↑ (Up)", s=20, marker="^")  # Red for up
+plt.scatter(dc_down["datetime"], dc_down["mid"], color='green', label="DC↓ (Down)", s=20, marker="v")  # Green for down
 
 # X-axis formatting
-plt.xticks([event_df["datetime"].iloc[0], event_df["datetime"].iloc[-1]])  # Rotate for better visibility
+plt.xticks([event_df["datetime"].iloc[0], event_df["datetime"].iloc[-1]])  # only first and last timestamp
 
 # Other formatting
 plt.xlabel("Time")
 plt.ylabel("Mid-Price")
-plt.title("Intrinsic Time Events in EUR/GBP")
+plt.title("Intrinsic Time and Directional Changes Events in EUR/GBP")
 plt.legend()
 plt.grid()
 
@@ -113,6 +128,7 @@ plt.show()
 #plt.show()
 
 print(event_df)
+print(df["directional_change"].value_counts(dropna=False))  # Check distribution of DC↑ and DC↓
 #print(df)
 #print(df["event"].isnull().sum())
 #print(df["event"].notnull().sum())
