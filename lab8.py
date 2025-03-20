@@ -115,20 +115,8 @@ plt.grid()
 # Show the plot
 plt.show()
 
-# coloured plot
-
-#plt.figure(figsize=(12, 6))
-#plt.scatter(event_df["datetime"], event_df["mid"], c=event_df["event"], cmap='coolwarm', marker='o', label="Intrinsic Events")
-#plt.xlabel("Time")
-#plt.ylabel("Mid-Price")
-#plt.title("Intrinsic Time Events in EUR/GBP")
-#plt.colorbar(label="Event Type")  # Color bar to show event values (-2, -1, 1, 2)
-#plt.grid()
-#plt.xticks(rotation=45)
-#plt.show()
-
-print(event_df)
-print(df["directional_change"].value_counts(dropna=False))  # Check distribution of DC↑ and DC↓
+#print(event_df)
+#print(df["directional_change"].value_counts(dropna=False))  # Check distribution of DC↑ and DC↓
 #print(df)
 #print(df["event"].isnull().sum())
 #print(df["event"].notnull().sum())
