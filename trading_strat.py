@@ -4,12 +4,15 @@ from lab8 import df
 from sklearn.model_selection import TimeSeriesSplit 
 
 # Our data is already sorted in order by time
+# Profitable on training + test for EURUSD 2025
+# Not enough trades being saved for wining thresholds for EURGBP
+# Github has the profitable EURUSD strat so you can experiment here
 
 
 if "directional_change" not in df.columns:
     raise ValueError(" 'directional_change' column is missing! Run lab8.py first.")
 
-train_size = int(len(df)*0.8)
+train_size = int(len(df)*0.6)
 train_df = df.iloc[:train_size].copy()
 test_df = df.iloc[train_size:].copy()
 
@@ -23,7 +26,7 @@ def backtest_strategy(data):
     stop_loss_level = None
     trades = []
 
-    theta = 0.004  # Same theta used in lab8.py
+    theta = 0.005  # Same theta used in lab8.py
     # Execute Trading Logic
     for index, row in data.iterrows():
         current_price = row["mid"]

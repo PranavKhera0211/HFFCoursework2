@@ -72,14 +72,19 @@ class directional_change:
         return None  # No directional change
 
             
-
+#EURGBP2025JAN
 #file_path = '/Users/Kherafamily/Documents/KCL/HFF/HFFCoursework2/cleaned_DAT_ASCII_EURGBP_T_202501.csv'
-file_path = '/Users/Kherafamily/Documents/KCL/HFF/HFFCoursework2/cleaned_DAT_ASCII_EURUSD_T_202501.csv'
+#EURUSD2025JAN
+#file_path = '/Users/Kherafamily/Documents/KCL/HFF/HFFCoursework2/cleaned_DAT_ASCII_EURUSD_T_202501.csv'
+#EURGBP2024NOV
+#file_path = '/Users/Kherafamily/Documents/KCL/HFF/2024Data/cleaned_DAT_ASCII_EURGBP_T_202411.csv'
+#EURUSD2024NOV
+file_path = '/Users/Kherafamily/Documents/KCL/HFF/2024Data/cleaned_DAT_ASCII_EURUSD_T_202411.csv'
 df = pd.read_csv(file_path, sep=',', header=None, names=["datetime", "bid", "ask", "mid"])
 
 
 intrinsic_detector = intrinsic_time(delta_up = 0.0005, delta_down = 0.0005)
-dc_detector = directional_change(theta = 0.004)
+dc_detector = directional_change(theta = 0.005)
 
 df["event"] = [intrinsic_detector.detect_event(mid) for mid in df["mid"]]
 df["directional_change"] = [dc_detector.detect_dc(mid) for mid in df["mid"]]
