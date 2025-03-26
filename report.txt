@@ -1,1 +1,51 @@
-sosk
+Pseudocode description:
+
+INITIALISE:
+    Capital = 1000
+    Position Open = False
+    Position Type = None
+    Theta = some threshold (e.g., 0.005)
+    For each price in dataset:
+    
+        IF DC↑ and no position is open:
+            Open Long Position
+            Record entry price and time
+            Calculate take-profit and stop-loss levels
+
+        IF DC↓ and no position is open:
+            Open Short Position
+            Record entry price and time
+            Calculate take-profit and stop-loss levels
+
+        IF a position is open:
+            IF long and price >= TP or <= SL:
+                Close long position
+                Calculate profit
+                Record trade info
+
+            IF short and price <= TP or >= SL:
+                Close short position
+                Calculate profit
+                Record trade info
+
+OUTPUT:
+    List of trades with entry/exit/PnL
+    Performance metrics (win rate, total return, etc.)
+
+Screenshot/Step by step section:
+
+Intrinsic time
+Directional change
+
+Downloading and cleaning data
+
+Introduce short selling
+Backtesting and training vs test set
+Used the training set to adjust values of theta
+
+Empirical results discussion section:
+
+Talk about fraction of total wealth invested per trade
+Scalability of strategy in real life 
+Talk about other potential modifcations ie. tailing stop loss
+Potential to use fractions for delta up and down too so that the strategy is robust for many FX swap rates 

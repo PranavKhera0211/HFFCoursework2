@@ -17,6 +17,7 @@ train_df = df.iloc[:train_size].copy()
 test_df = df.iloc[train_size:].copy()
 
 def backtest_strategy(data):
+    capital = 1000
     # Initialize Trading Strategy Variables 
     position_open = False
     position_type = None # long or short
@@ -56,7 +57,8 @@ def backtest_strategy(data):
                 if current_price >= take_profit_level or current_price <= stop_loss_level:
                     exit_price = current_price
                     exit_time = row["datetime"]
-                    PnL = exit_price - P_entry  # Profit = Sell Price - Buy Price
+                    position_size = capital / P_entry
+                    PnL = position_size * (exit_price - P_entry)  # Profit = Sell Price - Buy Price
 
                     trades.append({
                         "entry_time": entry_time,
@@ -64,7 +66,9 @@ def backtest_strategy(data):
                         "position_type": position_type,
                         "P_entry": P_entry,
                         "exit_price": exit_price,
-                        "PnL": PnL
+                        "PnL": PnL,
+                        "capital_used": capital,
+                        "position_size": position_size
                     })
 
                     position_open = False
@@ -73,7 +77,9 @@ def backtest_strategy(data):
                 if current_price <= take_profit_level or current_price >= stop_loss_level:
                     exit_price = current_price
                     exit_time = row["datetime"]
-                    PnL = P_entry - exit_price  # Profit = Sell Price - Buy Price (Short)
+                    position_size = capital / P_entry
+                    PnL = position_size * (P_entry - exit_price)
+  # Profit = Sell Price - Buy Price (Short)
 
                     trades.append({
                         "entry_time": entry_time,
@@ -81,7 +87,9 @@ def backtest_strategy(data):
                         "position_type": position_type,
                         "P_entry": P_entry,
                         "exit_price": exit_price,
-                        "PnL": PnL
+                        "PnL": PnL,
+                        "capital_used": capital,
+                        "position_size": position_size
                     })
 
                     position_open = False

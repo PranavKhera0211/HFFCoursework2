@@ -77,9 +77,9 @@ class directional_change:
 #EURUSD2025JAN
 #file_path = '/Users/Kherafamily/Documents/KCL/HFF/HFFCoursework2/cleaned_DAT_ASCII_EURUSD_T_202501.csv'
 #EURGBP2024NOV
-#file_path = '/Users/Kherafamily/Documents/KCL/HFF/2024Data/cleaned_DAT_ASCII_EURGBP_T_202411.csv'
+file_path = '/Users/Kherafamily/Documents/KCL/HFF/2024Data/cleaned_DAT_ASCII_EURGBP_T_202411.csv'
 #EURUSD2024NOV
-file_path = '/Users/Kherafamily/Documents/KCL/HFF/2024Data/cleaned_DAT_ASCII_EURUSD_T_202411.csv'
+#file_path = '/Users/Kherafamily/Documents/KCL/HFF/2024Data/cleaned_DAT_ASCII_EURUSD_T_202411.csv'
 df = pd.read_csv(file_path, sep=',', header=None, names=["datetime", "bid", "ask", "mid"])
 
 
