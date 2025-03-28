@@ -1,47 +1,10 @@
-Pseudocode description:
 
-INITIALISE:
-    Capital = 1000
-    Position Open = False
-    Position Type = None
-    Theta = some threshold (e.g., 0.005)
-    For each price in dataset:
-    
-        IF DC↑ and no position is open:
-            Open Long Position
-            Record entry price and time
-            Calculate take-profit and stop-loss levels
 
-        IF DC↓ and no position is open:
-            Open Short Position
-            Record entry price and time
-            Calculate take-profit and stop-loss levels
 
-        IF a position is open:
-            IF long and price >= TP or <= SL:
-                Close long position
-                Calculate profit
-                Record trade info
 
-            IF short and price <= TP or >= SL:
-                Close short position
-                Calculate profit
-                Record trade info
-
-OUTPUT:
-    List of trades with entry/exit/PnL
-    Performance metrics (win rate, total return, etc.)
-
-Screenshot/Step by step section:
-
-Intrinsic time
-Directional change
-
-Downloading and cleaning data
-
-Introduce short selling
+Introducing short selling into the algo given in lecture handouts
 Backtesting and training vs test set
-Used the training set to adjust values of theta
+Used the training set to adjust values of theta - once profitable, tested it
 
 Empirical results discussion section:
 
@@ -50,34 +13,6 @@ Scalability of strategy in real life
 Talk about other potential modifcations ie. tailing stop loss
 Potential to use fractions for delta up and down too so that the strategy is robust for many FX swap rates 
 
-                        datetime      bid      ask      mid
-0        2024-11-01 00:00:00.090  1.08771  1.08773  1.08772
-1        2024-11-01 00:00:00.193  1.08772  1.08774  1.08773
-2        2024-11-01 00:00:00.297  1.08773  1.08774  1.08773
-3        2024-11-01 00:00:00.400  1.08772  1.08774  1.08773
-4        2024-11-01 00:00:02.061  1.08773  1.08774  1.08773
-...                          ...      ...      ...      ...
-2312768  2024-11-29 16:59:57.159  1.05750  1.05791  1.05770
-2312769  2024-11-29 16:59:57.361  1.05749  1.05791  1.05770
-2312770  2024-11-29 16:59:57.462  1.05752  1.05794  1.05773
-2312771  2024-11-29 16:59:59.070  1.05749  1.05791  1.05770
-2312772  2024-11-29 16:59:59.223  1.05748  1.05800  1.05774
-
-[2312773 rows x 4 columns]
-                        datetime      bid      ask       mid
-0        2024-11-01 00:00:00.278  0.84330  0.84337  0.843335
-1        2024-11-01 00:00:00.518  0.84329  0.84336  0.843325
-2        2024-11-01 00:00:00.621  0.84330  0.84336  0.843330
-3        2024-11-01 00:00:02.089  0.84329  0.84336  0.843325
-4        2024-11-01 00:00:02.246  0.84329  0.84337  0.843330
-...                          ...      ...      ...       ...
-2162166  2024-11-29 16:59:01.551  0.82998  0.83132  0.830650
-2162167  2024-11-29 16:59:02.005  0.82998  0.83131  0.830645
-2162168  2024-11-29 16:59:02.307  0.82998  0.83130  0.830640
-2162169  2024-11-29 16:59:02.559  0.82998  0.83129  0.830635
-2162170  2024-11-29 16:59:02.661  0.82998  0.83132  0.830650
-
-[2162171 rows x 4 columns]
 
 
 
